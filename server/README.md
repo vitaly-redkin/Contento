@@ -8,13 +8,13 @@ Get started developing...
 
 ```shell
 # install deps
-npm install
+yarn install
 
 # run in development mode
-npm run dev
+yarn run dev
 
 # run tests
-npm run test
+yarn run test
 ```
 
 ---
@@ -24,7 +24,7 @@ npm run test
 Install all package dependencies (one time operation)
 
 ```shell
-npm install
+yarn install
 ```
 
 ## Run It
@@ -32,13 +32,13 @@ npm install
 Runs the application is development mode. Should not be used in production
 
 ```shell
-npm run dev
+yarn run dev
 ```
 
 or debug it
 
 ```shell
-npm run dev:debug
+yarn run dev:debug
 ```
 
 #### Run in *production* mode:
@@ -46,8 +46,8 @@ npm run dev:debug
 Compiles the application and starts it in production production mode.
 
 ```shell
-npm run compile
-npm start
+yarn run compile
+yarn start
 ```
 
 ## Test It
@@ -55,20 +55,20 @@ npm start
 Run the Mocha unit tests
 
 ```shell
-npm test
+yarn test
 ```
 
 or debug them
 
 ```shell
-npm run test:debug
+yarn run test:debug
 ```
 
 ## Try It
-* Open you're browser to [http://localhost:3000](http://localhost:3000)
-* Invoke the `/examples` endpoint 
+* Open you're browser to [http://localhost:3002](http://localhost:3002)
+* Invoke the `/content-item` endpoint 
   ```shell
-  curl http://localhost:3000/api/v1/examples
+  curl http://localhost:3002/api/v1/content-item?page_no=0&page_size=10
   ```
 
 
@@ -77,13 +77,13 @@ npm run test:debug
 #### Debug the server:
 
 ```
-npm run dev:debug
+yarn run dev:debug
 ```
 
 #### Debug Tests
 
 ```
-npm run test:debug
+yarn run test:debug
 ```
 
 #### Debug with VSCode
