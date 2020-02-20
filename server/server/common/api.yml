@@ -1,0 +1,92 @@
+openapi: 3.0.1
+info:
+  title: server
+  description: Contento Test Task Server
+  version: 1.0.0
+servers:
+- url: /api/v1
+tags:
+- name: ContentItems
+  description: Content Item endpoints
+- name: Specification
+  description: The swagger API specification
+paths:
+  /content-item:
+    get:
+      tags:
+      - ContentItems
+      description: Returns a subset of the content items (limited by the page name and size)
+      parameters:
+      - name: page_no
+        in: query
+        description: number of page to return
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - name: page_size
+        in: query
+        description: page size
+        required: true
+        schema:
+          type: integer
+        example: 10
+      responses:
+        200:
+          description: Returns a subset of the content items (limited by the page name and size)
+          content: {}
+  /content-item/{id}:
+    get:
+      tags:
+      - ContentItems
+      parameters:
+      - name: id
+        in: path
+        description: The id of the content item to retrieve
+        required: true
+        schema:
+          type: integer
+        example: 1
+      responses:
+        200:
+          description: Return the content item with the specified id
+          content: {}
+        404:
+          description: content item not found
+          content: {}
+    delete:
+      tags:
+      - ContentItems
+      parameters:
+      - name: id
+        in: path
+        description: The id of the content item to dismiss
+        required: true
+        schema:
+          type: integer
+        example: 1
+      description: Dismisses the content item with the given ID
+      responses:
+        200:
+          description: Return the content item with the specified id
+          content: {}
+        404:
+          description: content item not found
+          content: {}
+  /content-item/reset:
+    post:
+      tags:
+      - ContentItems
+      description: Reset the content items
+      responses:
+        200:
+          description: Empty object
+          content: {}
+  /spec:
+    get:
+      tags:
+      - Specification
+      responses:
+        200:
+          description: Return the API specification
+          content: {}
