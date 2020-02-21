@@ -2,10 +2,7 @@
  * The item component.
  */
 import * as React from 'react';
-import { 
-  Button, Typography, 
-  Card, CardMedia, CardContent
-} from '@material-ui/core';
+import { Button, Typography, Card, CardMedia, CardContent, Collapse } from '@material-ui/core';
 
 import { ContentItemModel } from '../../models/ContentItemModel';
 
@@ -28,6 +25,8 @@ interface Props {
 function Item(props: Props): JSX.Element {
   const {item, onSchedule, onDismiss} = props;
 
+  const [isDismissed, setDismissed] = React.useState<boolean>(false);
+
   /**
    * Schedules item.
    */
@@ -38,63 +37,77 @@ function Item(props: Props): JSX.Element {
       }
     },
     [item, onSchedule]
-  )
+  );
 
   /**
    * Dismisses item.
    */
-  const dismiss = React.useCallback(
+  const startDismiss = React.useCallback(
+    (): void => {
+      if (onDismiss) {
+        setDismissed(true);
+      }
+    },
+    [onDismiss]
+  );
+
+  /**
+   * Dismisses item.
+   */
+  const finalizeDismiss = React.useCallback(
     (): void => {
       if (onDismiss) {
         onDismiss(item);
       }
     },
     [item, onDismiss]
-  )
+  );
 
   /**
    * Renders component.
    */
   const render = (): JSX.Element => {
     return (
-      <Card className='item'>
-        <div className='details'>
-          <CardMedia
-            image={item.imageUrl}
-            title={item.title}
-            className='image'
-          />
+      <Collapse in={!isDismissed} timeout={500} onExited={finalizeDismiss}>
+        <Card className='item'>
+          <div className='details'>
+            <CardMedia
+              image={item.imageUrl}
+              title={item.title}
+              className='image'
+            />
 
-          <CardContent className='content'>
-            <Typography gutterBottom variant="h6" component="h6">
-              {item.title}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Link:&nbsp;
-              <a href={item.pageUrl} target='_blank' rel='noreferrer noopener'>
-                {item.pageUrl}
-              </a>
-            </Typography>
-          </CardContent>
+            <CardContent className='content'>
+              <Typography gutterBottom variant="h6" component="h6">
+                {item.title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Link:&nbsp;
+                <a href={item.pageUrl} target='_blank' rel='noreferrer noopener'>
+                  {item.pageUrl}
+                </a>
+              </Typography>
+            </CardContent>
 
-          {(onSchedule || onDismiss) &&
-          <CardContent className='content button-panel'>
-            <div className='buttons'>
-              {onSchedule && 
-              <Button onClick={schedule} color='primary' variant='contained'>
-                Schedule
-              </Button>
-              }
-              {onDismiss &&
-              <Button onClick={dismiss} variant='contained' >
-                Dismiss
-              </Button>
-              }
-            </div>
-          </CardContent>
-          }
-        </div>
-      </Card>
+            {(onSchedule || onDismiss) &&
+            <CardContent className='content button-panel'>
+              <div className='buttons'>
+                {onSchedule && 
+                <Button onClick={schedule} color='primary' variant='contained' title='Schedule this item'>
+                  Schedule
+                </Button>
+                }
+                {onDismiss &&
+                <Button onClick={startDismiss} variant='contained' title='Dismiss this item' >
+                  Dismiss
+                </Button>
+                }
+              </div>
+            </CardContent>
+            }
+          </div>
+        </Card>
+      </Collapse>
     );
   };
 

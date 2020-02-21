@@ -66,7 +66,6 @@ function reducer(state: State, action: Action): State {
 function ScheduleItem(): JSX.Element {
   const { id } = useParams();
   const itemId: number = parseInt(id, -1);
-  console.log({id, itemId});
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 

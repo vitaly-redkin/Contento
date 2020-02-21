@@ -74,12 +74,20 @@ function reducer(state: State, action: Action): State {
         totalItemCount: action.result.totalItemCount,
         scrollToEnd: true,
       }
-    case 'SHOW_NEXT_PAGE':
+    case 'SHOW_NEXT_PAGE': {
+      let pageNo: number = Math.ceil(state.items.length / PAGE_SIZE);
+      if (pageNo >= state.pageNo && pageNo * PAGE_SIZE < state.items.length) {
+        pageNo = state.pageNo;
+      } else if (pageNo >= state.pageNo && pageNo * PAGE_SIZE > state.items.length) {
+        pageNo = Math.max(state.pageNo - 1, 0);
+      }
+
       return {
         ...state,
         isLoading: true,
-        pageNo: state.pageNo + 1,
+        pageNo: pageNo,
       }
+    }
     case 'SET_ERROR':
       return {
         ...state,
@@ -245,16 +253,18 @@ function ItemList(): JSX.Element {
    */
   React.useEffect(
     (): void => {
-      loadNextPage();
+      if (state.isLoading) {
+        loadNextPage();
+      }
     },
-    [state.pageNo, loadNextPage]
+    [state.isLoading, loadNextPage]
   );
 
   /**
    * Renders content item list.
    */
   const renderList = (): JSX.Element => {
-    const itemsLeft: number = state.totalItemCount - (state.pageNo + 1) * PAGE_SIZE;
+    const itemsLeft: number = state.totalItemCount - state.items.length;
 
     return (
       <>
@@ -288,7 +298,7 @@ function ItemList(): JSX.Element {
   const render = (): JSX.Element => {
     if (state.redirectPath) {
       return (
-        <Redirect to={state.redirectPath} />
+        <Redirect to={state.redirectPath} push={true} />
       );
     }
 
@@ -299,7 +309,7 @@ function ItemList(): JSX.Element {
             <Typography variant='h6'>
               Content Items to Schedule or Dismiss ({state.items.length} of {state.totalItemCount})
             </Typography>
-            <IconButton onClick={reset} className='reset-button'>
+            <IconButton onClick={reset} className='reset-button' title='Reset the dismissed status'>
               <ResetIcon fontSize='large' />
             </IconButton>
           </Toolbar>
@@ -319,7 +329,7 @@ function ItemList(): JSX.Element {
               null
             )
             }
-            {state.items.length > 0 && renderList()}
+            {state.totalItemCount > 0 && renderList()}
           </div>
         </div>
       </Container>
