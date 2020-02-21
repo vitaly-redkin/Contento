@@ -1,0 +1,11 @@
+.schedule-item div.body-container
+{
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+
+}
+
+.schedule-item div.body
+{
+  margin: 20px
+}

@@ -47,7 +47,7 @@ for (let id = 0; id < ITEM_COUNT; id++) {
     id: id,
     title: `This is a sample image with ID=${id}`,
     pageUrl: `${IMAGE_URL_PREFIX}${imageId}/800/600.jpg`,
-    imageUrl: `${IMAGE_URL_PREFIX}${imageId}/200/100.jpg`,
+    imageUrl: `${IMAGE_URL_PREFIX}${imageId}/200/132.jpg`,
     dismissed: false,
   });
 }

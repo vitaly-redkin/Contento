@@ -1,0 +1,23 @@
+.item-list div.body-container
+{
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+
+}
+
+.item-list div.body
+{
+  margin: 20px
+}
+
+.item-list .reset-button
+{
+  right: 0;
+  position: absolute;
+  color: white;
+}
+
+.item-list .next-page-button
+{
+  width: 100%;
+}

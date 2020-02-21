@@ -1,0 +1,44 @@
+.item 
+{
+  display: 'flex';
+  margin-bottom: 10px;
+}
+
+.item .details
+{
+  display: flex;
+  flex-direction: row;
+}
+
+.item .content
+{
+  flex: 1 0 auto;
+}
+
+.item .image
+{
+  width: 200px;
+  height: 132px;
+}
+
+.item .content a
+{
+  color: black;
+}
+
+.item .button-panel
+{
+  max-width:  140px;
+}
+
+.item .content .buttons
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.item .content .buttons button
+{
+  width: 120px;
+  margin-bottom: 10px;
+}
